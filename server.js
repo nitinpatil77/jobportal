@@ -4,9 +4,11 @@ import cors from 'cors';
 import 'dotenv/config';
 import dbConfig from './config/dbConfig.js';
 import { clerkWebhook } from './src/controller/webhooks.js';
+import { clerkMiddleware } from '@clerk/express';
 import connectCloudinary from './config/cloudinary.js'
 import Companyrouter from './src/routes/companyRoutes/companyRoutes.js';
 import jobRouter from './src/routes/jobRoute/jobRoutes.js';
+import userRouter from './src/routes/userRoutes/userRoutes.js';
 // initial express app
 const app=express();
 const server = createServer(app);
@@ -18,7 +20,7 @@ await connectCloudinary();
 // middleware
 app.use(cors());
 app.use(express.json());
-
+app.use(clerkMiddleware());
 // routes
 app.get('/', (req, res) => {
   res.send('Welcome to the backend server!');
@@ -26,6 +28,7 @@ app.get('/', (req, res) => {
 app.post('/webhooks',clerkWebhook)
 app.use('/api/v1/company',Companyrouter);
 app.use('/api/v1/jobs', jobRouter);
+app.use('/api/v1/users',userRouter)
 // start the server
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
