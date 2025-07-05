@@ -1,11 +1,19 @@
 import './App.css'
+import Applications from './pages/Applications'
+import ApplyJob from './pages/ApplyJob'
+import Home from './pages/Home'
+import { Routes, Route } from 'react-router-dom'
 
 function App() {
 
   return (
-    <div className='flex justify-center items-center min-h-screen bg-amber-200'>
-      <h1 className='text-xl font-medium text-black'>job portal</h1>
-    </div>
+    <>
+      <Routes>
+         <Route path='/' element={<Home/>}/>
+         <Route path='/apply-job/:id' element={<ApplyJob/>}/>
+         <Route path='/applications' element={<Applications/>}/>         
+      </Routes>
+    </>
   )
 }
 
