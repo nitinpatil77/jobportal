@@ -3,6 +3,7 @@ import { v2 as cloudinary } from "cloudinary";
 import genrateToken from "../../utils/generateToken.js";
 import Company from "../../models/companyModel/companySchema.js";
 import Job from "../../models/companyModel/jobSchema.js";
+import JobApplication from '../../models/companyModel/jobApplicationSchema.js'
 // register new company
 export const registerCompany = async (req, res) => {
   const { name, email, password } = req.body;
@@ -143,7 +144,12 @@ export const getCompanyPostedJobs = async (req, res) => {
   try {
     const companyId = req.company._id;
     const jobs = await Job.find({ companyId });
-    res.json({ success: true, jobs });
+    // Adding no of applicants in data
+    const jobsData=await Promise.all(jobs.map(async(job)=>{
+      const applicants=await JobApplication.find({jobId:job._id});
+      return({...job.toObject(),applicants:applicants.length});
+    })) 
+    res.json({ success: true, jobsData });
   } catch (error) {
     res.json({ success: false, message: error.message });
   }
