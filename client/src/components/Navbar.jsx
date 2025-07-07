@@ -1,0 +1,18 @@
+import React from 'react'
+import {assets} from '../assets/assets'
+
+const Navbar = () => {
+  return (
+    <div className='shadow py-4'>
+      <div className='container mx-auto 2xl:px-20 flex justify-between items-center'>
+         <img src={assets.logo} alt="logo"/>
+         <div className='flex justify-center items-center gap-5 max-sm:text-xs '>
+            <button className='text-gray-600'>Recruiter Login</button>
+            <button className='bg-blue-600 rounded-full text-white font-normal px-6 sm:px-9 py-2'>Login</button>
+         </div>
+      </div>
+    </div>
+  )
+}
+
+export default Navbar
