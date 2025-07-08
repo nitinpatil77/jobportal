@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { AppContext } from '../context/AppContext'
 import Navbar from '../components/Navbar'
 import Hero from '../components/Hero'
+import Joblist from '../components/Joblist'
 
 const Home = () => {  
 
@@ -9,6 +10,7 @@ const Home = () => {
     <div>
       <Navbar/> 
       <Hero/>
+      <Joblist/>
     </div>
   )
 }

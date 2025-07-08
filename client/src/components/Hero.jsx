@@ -1,31 +1,50 @@
-import React from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { assets } from '../assets/assets'
+import { AppContext } from '../context/AppContext'
 
 const Hero = () => {
+
+    const { setIsSearched, setSearchFilter } = useContext(AppContext);
+
+    const titleRef = useRef();
+    const locationRef = useRef();
+
+    const onSearch = ()=>{
+
+       setSearchFilter({
+          title:titleRef.current.value,
+          location:locationRef.current.value
+       });
+
+       setIsSearched(true);
+    }
+
     return (
         <div className='container mx-auto 2xl:px-20 my-10'>
             <div className='bg-gradient-to-r from-[#4F0487] to-[#130121] py-16 text-white text-center rounded-xl'>
                 <h2 className='text-3xl md:text-3xl lg:text-4xl font-medium mb-4'>Over 10,000+ jobs to apply</h2>
                 <p className='mb-8 max-w-xl mx-auto text-[15px] font-light px-5'>Your Next Big Career Move Starts Right Here - Explore the Best Job Opportunities and Take the First Step Toward Your Future!</p>
-                <div className='flex items-center justify-between bg-white rounded text-gray-600 max-w-xl px-4 mx-4 sm:mx-auto'>
+                <div className='flex max-sm:flex-col items-center justify-between bg-white rounded text-gray-600 max-w-xl px-4 mx-4 sm:mx-auto'>
                     <div className='flex items-center'>
                         <img className='h-4 sm:h-5' src={assets.search_icon} alt="search-icon" />
                         <input type="text"
                             placeholder='search for jobs'
                             className='max-sm:text-xs p-2 rounded outline-none w-full bg-transparent'
+                            ref={titleRef}
                         />
                     </div>
                     <div className='flex items-center'>
-                        <img className='h-4 sm:h-5 mr-1' src={assets.location_icon} alt="location-icon"/>
+                        <img className='h-4 sm:h-5 mr-1' src={assets.location_icon} alt="location-icon" />
                         <input type="text"
                             placeholder='location'
                             className='max-sm:text-xs p-2 rounded outline-none w-full bg-transparent'
+                            ref={locationRef}
                         />
                     </div>
-                    <button className='bg-blue-600 px-8 py-2 rounded text-white my-2'>Search</button>
+                    <button onClick={onSearch} className='bg-blue-600 px-8 py-2 rounded text-white my-2'>Search</button>
                 </div>
             </div>
-            <div className='border border-gray-300 mx-2 mt-12 p-6 rounded-md flex'>
+            <div className='border border-gray-300 mt-12 p-6 rounded-md flex'>
                 <div className='flex justify-center items-center gap-10 lg:gap-16 flex-wrap'>
                     <p className='font-medium'>Trusted by</p>
                     <img className='h-6' src={assets.microsoft_logo} alt="Company Logo" />
