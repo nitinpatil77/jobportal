@@ -113,8 +113,8 @@ const Joblist = () => {
                         {
                             (() => {
                                 const totalPages = Math.ceil(jobsData.length / 6);
-                                const maxVisiblePages = 10;
-                                let startPage = Math.max(currentPage - 4, 1);
+                                const maxVisiblePages = 5;
+                                let startPage = Math.max(currentPage - 2, 1);
                                 let endPage = startPage + maxVisiblePages - 1;
 
                                 if (endPage > totalPages) {
