@@ -8,6 +8,7 @@ const Joblist = () => {
 
     const { searchFilter, setSearchFilter, jobsData } = useContext(AppContext);
     const [showFilters, setShowFilters] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
 
     return (
         <div className='container 2xl:px-20 mx-auto flex flex-col lg:flex-row max-lg:space-y-8 min-lg:py-6'>
@@ -42,7 +43,7 @@ const Joblist = () => {
                     </>
                 )}
 
-                <button onClick={()=>{setShowFilters((prev)=> !prev)}} className='px-4 py-2 mt-4 text-gray-600 shadow border border-gray-200 min-lg:hidden'>
+                <button onClick={() => { setShowFilters((prev) => !prev) }} className='px-4 py-2 mt-4 text-gray-600 shadow border border-gray-200 min-lg:hidden'>
                     {showFilters ? 'close' : 'filters'}
                 </button>
 
@@ -82,16 +83,75 @@ const Joblist = () => {
             </div>
 
             {/* job list */}
-            <section className='w-full text-gray-800 max-xl:px-4 max-lg:mt-6'>
-                <h3 className='font-semibold text-3xl mb-4' id='job-list'>Latest Jobs</h3>
+            <section className='w-full text-gray-800 max-xl:px-4 max-lg:mt-6' id='job-list'>
+                <h3 className='font-semibold text-3xl mb-4'>Latest Jobs</h3>
                 <p className='mb-8'>Get your desired job from top companies</p>
                 <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 mt-8'>
                     {
-                        jobsData.map((job, index) => (
+                        jobsData.slice((currentPage - 1) * 6, currentPage * 6).map((job, index) => (
                             <JobCard key={index} job={job} />
                         ))
                     }
                 </div>
+
+                {/* pagination */}
+                {jobsData.length > 0 && (
+                    <div className='flex items-center justify-center space-x-2 mt-10'>
+                        {/* Previous Arrow */}
+                        <div>
+                            <img
+                                onClick={() => {
+                                    setCurrentPage((prev) => (prev - 1 < 1 ? prev : prev - 1));
+                                }}
+                                className='mx-5 cursor-pointer'
+                                src={assets.left_arrow_icon}
+                                alt="left arrow"
+                            />
+                        </div>
+
+                        {/* Pagination buttons */}
+                        {
+                            (() => {
+                                const totalPages = Math.ceil(jobsData.length / 6);
+                                const maxVisiblePages = 10;
+                                let startPage = Math.max(currentPage - 4, 1);
+                                let endPage = startPage + maxVisiblePages - 1;
+
+                                if (endPage > totalPages) {
+                                    endPage = totalPages;
+                                    startPage = Math.max(endPage - maxVisiblePages + 1, 1);
+                                }
+
+                                return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i).map((pageNum) => (
+                                    <a key={pageNum} href="#job-list">
+                                        <button
+                                            onClick={() => setCurrentPage(pageNum)}
+                                            className={`w-10 h-10 flex items-center justify-center border border-gray-300 rounded ${currentPage === pageNum ? 'bg-blue-100 text-blue-500' : 'text-gray-500'}`}
+                                        >
+                                            {pageNum}
+                                        </button>
+                                    </a>
+                                ));
+                            })()
+                        }
+
+                        {/* Next Arrow */}
+                        <div>
+                            <img
+                                onClick={() => {
+                                    setCurrentPage((prev) =>
+                                        prev + 1 > Math.ceil(jobsData.length / 6) ? prev : prev + 1
+                                    );
+                                }}
+                                className='mx-5 cursor-pointer'
+                                src={assets.right_arrow_icon}
+                                alt="right arrow"
+                            />
+                        </div>
+                    </div>
+                )}
+
+
             </section>
         </div>
     )
