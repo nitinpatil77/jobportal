@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "k-convert": "^1.0.6",
+    "moment": "^2.30.1"
+  }
+}
