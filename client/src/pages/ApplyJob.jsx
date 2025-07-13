@@ -21,9 +21,6 @@ const ApplyJob = () => {
     }
   }, [jobsData, id]);
 
-  console.log(job)
-
-
   if (!job) {
     return (
       <div className='min-h-screen flex justify-center items-center'>
