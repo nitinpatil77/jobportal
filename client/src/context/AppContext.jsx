@@ -15,6 +15,8 @@ export const AppContextProvide = ({ children }) => {
 
   const [jobsData, setjobsData] = useState([]);
 
+  const [showRecuriterLogin, setShowRecuriterLogin] = useState(false)
+
   useEffect(()=>{
     setjobsData([...getJobs()]);
   },[]);
@@ -25,6 +27,8 @@ export const AppContextProvide = ({ children }) => {
     isSearched,
     setIsSearched,
     jobsData, 
+    showRecuriterLogin, 
+    setShowRecuriterLogin
   }
 
   return (
