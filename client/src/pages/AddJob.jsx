@@ -37,8 +37,14 @@ const AddJob = () => {
     };
 
     console.log(jobData);
-    
 
+    setTitle('');
+    setLocation('');
+    setCategory('');
+    setLevel('');
+    setSalary('');
+    setDescription('');
+    
   };
 
   return (
